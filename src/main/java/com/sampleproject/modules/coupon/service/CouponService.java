@@ -1,5 +1,6 @@
 package com.sampleproject.modules.coupon.service;
 
+import com.sampleproject.common.enums.CouponStatus;
 import com.sampleproject.modules.coupon.dto.CouponRequest;
 import com.sampleproject.modules.coupon.dto.CouponResponse;
 import com.sampleproject.modules.coupon.entity.Coupon;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class CouponService {
@@ -32,8 +35,41 @@ public class CouponService {
         return this.couponMapper.toResponse(this.couponRepository.save(coupon));
     }
 
-    public void validateCoupon(String code){
+    public CouponResponse validateCoupon(String code, Double routeFee) {
 
+        if (code == null || code.isBlank()) {
+            throw new IllegalArgumentException("Coupon code is required");
+        }
+
+        if (routeFee == null) {
+            throw new IllegalArgumentException("Route fee is required");
+        }
+
+        Coupon coupon = this.couponRepository.findByCode(code)
+                .orElseThrow(() -> new RuntimeException("Coupon not found with code: " + code));
+
+        User currentLoggedInUser = this.currentUserService.getCurrentUser();
+
+        if (coupon.getOwner() == null
+                || !coupon.getOwner().getId().equals(currentLoggedInUser.getId())) {
+            throw new RuntimeException("This coupon does not belong to the logged-in user");
+        }
+
+        if (coupon.getStatus() != CouponStatus.ACTIVE) {
+            throw new RuntimeException("Coupon is not active");
+        }
+
+        LocalDate today = LocalDate.now();
+
+        if (coupon.getExpiryDate() == null || coupon.getExpiryDate().isBefore(today)) {
+            throw new RuntimeException("Coupon is expired");
+        }
+
+        if (coupon.getAmount() == null || coupon.getAmount() < routeFee) {
+            throw new RuntimeException("Coupon amount is not enough for this route");
+        }
+
+        return this.couponMapper.toResponse(coupon);
     }
 
     public void useCoupon(String code){}

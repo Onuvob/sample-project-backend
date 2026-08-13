@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
     @Query("SELECT new com.sampleproject.modules.coupon.dto.CouponResponse() " +
@@ -21,4 +23,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
     Page<CouponResponse> getSelfPaginatedList(@Param("code") String code,
                                               @Param("currentUser") User currentUser,
                                               Pageable pageable);
+
+    Optional<Coupon> findByCode(String code);
 }
