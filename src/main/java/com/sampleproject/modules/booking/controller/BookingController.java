@@ -1,5 +1,6 @@
 package com.sampleproject.modules.booking.controller;
 
+import com.sampleproject.modules.booking.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/bookings")
 @RequiredArgsConstructor
 public class BookingController {
+
+    private final BookingService bookingService;
 
     @PostMapping("/create")
     public void createBooking(){
