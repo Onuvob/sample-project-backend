@@ -4,6 +4,7 @@ import com.sampleproject.common.entity.BaseEntity;
 import com.sampleproject.common.enums.CouponStatus;
 import com.sampleproject.user.entity.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
