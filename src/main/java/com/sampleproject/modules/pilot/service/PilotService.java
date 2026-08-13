@@ -1,6 +1,7 @@
 package com.sampleproject.modules.pilot.service;
 
 import com.sampleproject.common.enums.PilotStatus;
+import com.sampleproject.modules.coupon.entity.Coupon;
 import com.sampleproject.modules.pilot.dto.PilotRequest;
 import com.sampleproject.modules.pilot.dto.PilotResponse;
 import com.sampleproject.modules.pilot.entity.Pilot;
@@ -39,6 +40,11 @@ public class PilotService {
     public PilotResponse createPilot(PilotRequest request){
         Pilot pilot = this.pilotMapper.toEntity(request);
         return this.pilotMapper.toResponse(this.pilotRepository.save(pilot));
+    }
+
+    public Pilot getById(Long id){
+        return this.pilotRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pilot not found with id: " + id));
     }
 
     public PilotResponse updatePilot(Long id, PilotRequest request) {

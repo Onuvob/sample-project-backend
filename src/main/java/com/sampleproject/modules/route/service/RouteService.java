@@ -6,6 +6,7 @@ import com.sampleproject.modules.route.dto.RouteResponse;
 import com.sampleproject.modules.route.entity.Route;
 import com.sampleproject.modules.route.mapper.RouteMapper;
 import com.sampleproject.modules.route.repository.RouteRepository;
+import com.sampleproject.modules.vessel.entity.Vehicle;
 import com.sampleproject.util.QueryHelper;
 import com.sampleproject.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,11 @@ public class RouteService {
         Route route = this.routeMapper.toEntity(request);
 
         return this.routeMapper.toResponse(this.routeRepository.save(route));
+    }
+
+    public Route getById(Long id){
+        return this.routeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Route not found with id: " + id));
     }
 
     public RouteResponse updateRoute(Long id, RouteRequest request){

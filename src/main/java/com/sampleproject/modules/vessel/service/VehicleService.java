@@ -33,6 +33,11 @@ public class VehicleService {
         return this.vehicleMapper.toResponse(this.vehicleRepository.save(vehicle));
     }
 
+    public Vehicle getById(Long id){
+        return this.vehicleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found with id: " + id));
+    }
+
     public VehicleResponse updateVehicle(Long id, VehicleRequest request){
         Vehicle vehicle = this.vehicleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found with id: " + id));

@@ -7,6 +7,7 @@ import com.sampleproject.modules.coupon.dto.CouponValidationRequest;
 import com.sampleproject.modules.coupon.entity.Coupon;
 import com.sampleproject.modules.coupon.mapper.CouponMapper;
 import com.sampleproject.modules.coupon.repository.CouponRepository;
+import com.sampleproject.modules.route.entity.Route;
 import com.sampleproject.user.entity.User;
 import com.sampleproject.user.service.UserService;
 import com.sampleproject.util.CurrentUserService;
@@ -34,6 +35,12 @@ public class CouponService {
         User couponOwner = this.userService.getUserById(request.getOwnerId());
         Coupon coupon = this.couponMapper.toEntity(request, couponOwner);
         return this.couponMapper.toResponse(this.couponRepository.save(coupon));
+    }
+
+
+    public Coupon getByCode(String couponCode){
+        return this.couponRepository.findByCode(couponCode)
+                .orElseThrow(() -> new RuntimeException("Coupon not found with code: " + couponCode));
     }
 
     public CouponResponse validateCoupon(CouponValidationRequest request) {
