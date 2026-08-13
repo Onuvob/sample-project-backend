@@ -57,9 +57,4 @@ public class BookingController {
             return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
         }
     }
-
-    @PostMapping("/pay/{id}")
-    public void pay(@PathVariable Long id){
-
-    }
 }

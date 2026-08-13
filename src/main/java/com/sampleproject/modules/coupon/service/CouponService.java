@@ -43,7 +43,7 @@ public class CouponService {
                 .orElseThrow(() -> new RuntimeException("Coupon not found with code: " + couponCode));
     }
 
-    public CouponResponse validateCoupon(CouponValidationRequest request) {
+    public Coupon validateCoupon(CouponValidationRequest request) {
 
         if (request.getCode() == null || request.getCode().isBlank()) {
             throw new IllegalArgumentException("Coupon code is required");
@@ -77,7 +77,7 @@ public class CouponService {
             throw new RuntimeException("Coupon amount is not enough for this route");
         }
 
-        return this.couponMapper.toResponse(coupon);
+        return coupon;
     }
 
     public void useCoupon(String code){}

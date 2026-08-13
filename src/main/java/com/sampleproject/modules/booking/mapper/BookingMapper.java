@@ -87,7 +87,6 @@ public class BookingMapper {
                 .vehicle(vehicle)
                 .route(route)
                 .coupon(coupon)
-                .amount(request.getAmount())
                 .build();
     }
 }

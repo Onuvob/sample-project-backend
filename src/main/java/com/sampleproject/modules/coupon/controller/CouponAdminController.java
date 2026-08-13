@@ -3,7 +3,6 @@ package com.sampleproject.modules.coupon.controller;
 import com.sampleproject.modules.coupon.dto.CouponRequest;
 import com.sampleproject.modules.coupon.dto.CouponResponse;
 import com.sampleproject.modules.coupon.service.CouponService;
-import com.sampleproject.modules.pilot.dto.PilotResponse;
 import com.sampleproject.util.ApiResponse;
 import com.sampleproject.util.RequestUtil;
 import jakarta.validation.Valid;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/adminCoupon")
+@RequestMapping("/adminCoupons")
 @RequiredArgsConstructor
 public class CouponAdminController {
 

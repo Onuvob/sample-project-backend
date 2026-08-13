@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/coupon")
+@RequestMapping("/coupons")
 @RequiredArgsConstructor
 public class CouponController {
 
@@ -37,13 +37,13 @@ public class CouponController {
         return ResponseEntity.ok(ApiResponse.success("Pilots retrieve successfully", response));
     }
 
-    @PostMapping("/validate")
-    public ResponseEntity<ApiResponse<CouponResponse>> validateCoupon(@RequestBody CouponValidationRequest validationRequest){
-        try{
-            CouponResponse couponResponse = this.couponService.validateCoupon(validationRequest);
-            return ResponseEntity.ok(ApiResponse.success("Coupon validated successfully", couponResponse));
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
-        }
-    }
+//    @PostMapping("/validate")
+//    public ResponseEntity<ApiResponse<CouponResponse>> validateCoupon(@RequestBody CouponValidationRequest validationRequest){
+//        try{
+//            CouponResponse couponResponse = this.couponService.validateCoupon(validationRequest);
+//            return ResponseEntity.ok(ApiResponse.success("Coupon validated successfully", couponResponse));
+//        }catch (Exception e){
+//            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
+//        }
+//    }
 }

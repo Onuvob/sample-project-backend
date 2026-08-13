@@ -1,12 +1,15 @@
 package com.sampleproject.modules.booking.service;
 
 import com.sampleproject.common.enums.BookingStatus;
+import com.sampleproject.common.enums.PaymentStatus;
+import com.sampleproject.common.enums.VehicleStatus;
 import com.sampleproject.modules.booking.dto.AssignPilotRequest;
 import com.sampleproject.modules.booking.dto.BookingRequest;
 import com.sampleproject.modules.booking.dto.BookingResponse;
 import com.sampleproject.modules.booking.entity.Booking;
 import com.sampleproject.modules.booking.mapper.BookingMapper;
 import com.sampleproject.modules.booking.repository.BookingRepository;
+import com.sampleproject.modules.coupon.dto.CouponValidationRequest;
 import com.sampleproject.modules.coupon.entity.Coupon;
 import com.sampleproject.modules.coupon.service.CouponService;
 import com.sampleproject.modules.pilot.entity.Pilot;
@@ -17,7 +20,6 @@ import com.sampleproject.modules.vessel.entity.Vehicle;
 import com.sampleproject.modules.vessel.service.VehicleService;
 import com.sampleproject.user.entity.User;
 import com.sampleproject.util.CurrentUserService;
-import com.sampleproject.util.QueryHelper;
 import com.sampleproject.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -42,15 +44,30 @@ public class BookingService {
 
         User owner = this.currentUserService.getCurrentUser();
         Vehicle vehicle = this.vehicleService.getById(request.getVehicleId());
+
+        if(!vehicle.getStatus().equals(VehicleStatus.APPROVED)){
+            throw new RuntimeException("Vehicle is not approved yet!");
+        }
+
+        if(!vehicle.getOwner().equals(owner)){
+            throw new RuntimeException("Vehicle is not belong to you.");
+        }
         Route route = this.routeService.getById(request.getRouteId());
-        Coupon coupon = this.couponService.getByCode(request.getCouponCode());
+
+        CouponValidationRequest couponValidationRequest = new CouponValidationRequest();
+        couponValidationRequest.setCode(request.getCouponCode());
+        couponValidationRequest.setRouteFee(route.getServiceFee());
+
+        Coupon coupon = this.couponService.validateCoupon(couponValidationRequest);
 
         Booking booking = this.bookingMapper.toEntity(request, owner, vehicle, route, coupon);
 
+        booking.setAmount(route.getServiceFee());
+        booking.setBookingStatus(BookingStatus.PENDING);
+        booking.setPaymentStatus(PaymentStatus.PAID);
+
         return this.bookingMapper.toResponse(this.bookingRepository.save(booking));
     }
-
-    public void payWithCoupon(){}
 
     public BookingResponse approveBooking(Long id){
         Booking booking = this.bookingRepository.findById(id)

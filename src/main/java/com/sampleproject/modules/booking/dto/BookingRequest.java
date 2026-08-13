@@ -7,5 +7,4 @@ public class BookingRequest {
     private Long vehicleId;
     private Long routeId;
     private String couponCode;
-    private Double amount;
 }
