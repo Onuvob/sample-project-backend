@@ -10,8 +10,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface RouteRepository extends JpaRepository<Route, Long> {
 
-    @Query("SELECT new com.sampleproject.modules.route.dto.RouteResponse() " +
-            "FROM r WHERE (:destination IS NULL OR LOWER(r.destination) LIKE :destination) " +
+    @Query("SELECT new com.sampleproject.modules.route.dto.RouteResponse(r.id, r.source, " +
+            "r.destination, r.serviceFee, r.active) " +
+            "FROM Route r WHERE (:destination IS NULL OR LOWER(r.destination) LIKE :destination) " +
             "AND (:source IS NULL OR LOWER(r.source) LIKE :source)")
     Page<RouteResponse> getPaginatedList(@Param("destination") String destination,
                                          @Param("source") String source,

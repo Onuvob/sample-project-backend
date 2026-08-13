@@ -65,19 +65,4 @@ public final class SecurityUtil {
     public static boolean hasRole(String role) {
         return getCurrentUserRoles().contains(role);
     }
-
-    public static User getCurrentUser() {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new RuntimeException("User is not authenticated");
-        }
-
-        String username = authentication.getName();
-
-        return userRepository.findByEmail(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
 }
