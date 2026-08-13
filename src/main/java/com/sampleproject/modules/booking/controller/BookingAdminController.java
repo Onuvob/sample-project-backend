@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/adminBooking")
+@RequestMapping("/adminBookings")
 @RequiredArgsConstructor
 public class BookingAdminController {
 
