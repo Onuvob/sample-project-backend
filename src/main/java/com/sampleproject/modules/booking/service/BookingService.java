@@ -1,5 +1,7 @@
 package com.sampleproject.modules.booking.service;
 
+import com.sampleproject.common.enums.BookingStatus;
+import com.sampleproject.modules.booking.dto.AssignPilotRequest;
 import com.sampleproject.modules.booking.dto.BookingRequest;
 import com.sampleproject.modules.booking.dto.BookingResponse;
 import com.sampleproject.modules.booking.entity.Booking;
@@ -7,6 +9,7 @@ import com.sampleproject.modules.booking.mapper.BookingMapper;
 import com.sampleproject.modules.booking.repository.BookingRepository;
 import com.sampleproject.modules.coupon.entity.Coupon;
 import com.sampleproject.modules.coupon.service.CouponService;
+import com.sampleproject.modules.pilot.entity.Pilot;
 import com.sampleproject.modules.pilot.service.PilotService;
 import com.sampleproject.modules.route.entity.Route;
 import com.sampleproject.modules.route.service.RouteService;
@@ -43,15 +46,37 @@ public class BookingService {
 
     public void payWithCoupon(){}
 
-    public void approveBooking(){}
+    public BookingResponse approveBooking(Long id){
+        Booking booking = this.bookingRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Booking not found with id: "+id));
+        booking.setBookingStatus(BookingStatus.APPROVED);
+        return this.bookingMapper.toResponse(this.bookingRepository.save(booking));
+    }
 
-    public void rejectBooking(){}
+    public BookingResponse rejectBooking(Long id){
+        Booking booking = this.bookingRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Booking not found with id: "+id));
+        booking.setBookingStatus(BookingStatus.REJECTED);
+        return this.bookingMapper.toResponse(this.bookingRepository.save(booking));
+    }
 
-    public void assignPilot(){}
+    public BookingResponse assignPilot(AssignPilotRequest request){
+        Booking booking = this.bookingRepository.findById(request.getBookingId())
+                .orElseThrow(()-> new RuntimeException("Booking not found with id: "+request.getBookingId()));
+
+        Pilot pilot = this.pilotService.getById(request.getPilotId());
+        booking.setPilot(pilot);
+
+        return this.bookingMapper.toResponse(this.bookingRepository.save(booking));
+    }
 
     public void myBookings(){}
 
     public void allBookings(){}
 
-    public void bookingDetails(){}
+    public BookingResponse bookingDetails(Long id){
+        Booking booking = this.bookingRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Booking not found with id: "+id));
+        return this.bookingMapper.toResponse(booking);
+    }
 }
