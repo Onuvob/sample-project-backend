@@ -17,7 +17,13 @@ import com.sampleproject.modules.vessel.entity.Vehicle;
 import com.sampleproject.modules.vessel.service.VehicleService;
 import com.sampleproject.user.entity.User;
 import com.sampleproject.util.CurrentUserService;
+import com.sampleproject.util.QueryHelper;
+import com.sampleproject.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -70,9 +76,23 @@ public class BookingService {
         return this.bookingMapper.toResponse(this.bookingRepository.save(booking));
     }
 
-    public void myBookings(){}
+    public Page<BookingResponse> myBookings(RequestUtil request){
+        Sort sort = Sort.by(request.getSortDir().equalsIgnoreCase("asc")
+                ? Sort.Direction.ASC : Sort.Direction.DESC, request.getSortField());
+        Pageable pageable = PageRequest.of(request.getPageNum() - 1, request.getPageSize(), sort);
 
-    public void allBookings(){}
+        User owner = this.currentUserService.getCurrentUser();
+
+        return this.bookingRepository.getSelfPaginatedList(owner, pageable);
+    }
+
+    public Page<BookingResponse> allBookings(RequestUtil request){
+        Sort sort = Sort.by(request.getSortDir().equalsIgnoreCase("asc")
+                ? Sort.Direction.ASC : Sort.Direction.DESC, request.getSortField());
+        Pageable pageable = PageRequest.of(request.getPageNum() - 1, request.getPageSize(), sort);
+
+        return this.bookingRepository.getPaginatedList(pageable);
+    }
 
     public BookingResponse bookingDetails(Long id){
         Booking booking = this.bookingRepository.findById(id)
