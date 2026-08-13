@@ -3,6 +3,7 @@ package com.sampleproject.modules.coupon.service;
 import com.sampleproject.common.enums.CouponStatus;
 import com.sampleproject.modules.coupon.dto.CouponRequest;
 import com.sampleproject.modules.coupon.dto.CouponResponse;
+import com.sampleproject.modules.coupon.dto.CouponValidationRequest;
 import com.sampleproject.modules.coupon.entity.Coupon;
 import com.sampleproject.modules.coupon.mapper.CouponMapper;
 import com.sampleproject.modules.coupon.repository.CouponRepository;
@@ -35,18 +36,18 @@ public class CouponService {
         return this.couponMapper.toResponse(this.couponRepository.save(coupon));
     }
 
-    public CouponResponse validateCoupon(String code, Double routeFee) {
+    public CouponResponse validateCoupon(CouponValidationRequest request) {
 
-        if (code == null || code.isBlank()) {
+        if (request.getCode() == null || request.getCode().isBlank()) {
             throw new IllegalArgumentException("Coupon code is required");
         }
 
-        if (routeFee == null) {
+        if (request.getRouteFee() == null) {
             throw new IllegalArgumentException("Route fee is required");
         }
 
-        Coupon coupon = this.couponRepository.findByCode(code)
-                .orElseThrow(() -> new RuntimeException("Coupon not found with code: " + code));
+        Coupon coupon = this.couponRepository.findByCode(request.getCode())
+                .orElseThrow(() -> new RuntimeException("Coupon not found with code: " + request.getCode()));
 
         User currentLoggedInUser = this.currentUserService.getCurrentUser();
 
@@ -65,7 +66,7 @@ public class CouponService {
             throw new RuntimeException("Coupon is expired");
         }
 
-        if (coupon.getAmount() == null || coupon.getAmount() < routeFee) {
+        if (coupon.getAmount() == null || coupon.getAmount() < request.getRouteFee()) {
             throw new RuntimeException("Coupon amount is not enough for this route");
         }
 
