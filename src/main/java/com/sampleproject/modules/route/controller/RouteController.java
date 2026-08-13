@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/route")
+@RequestMapping("/routes")
 @RequiredArgsConstructor
 public class RouteController {
 

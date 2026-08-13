@@ -1,7 +1,6 @@
 package com.sampleproject.modules.coupon.controller;
 
 import com.sampleproject.modules.coupon.dto.CouponResponse;
-import com.sampleproject.modules.coupon.dto.CouponValidationRequest;
 import com.sampleproject.modules.coupon.service.CouponService;
 import com.sampleproject.util.ApiResponse;
 import com.sampleproject.util.RequestUtil;
@@ -36,14 +35,4 @@ public class CouponController {
         response.put("reverseSortDir", (request.getSortDir().equals("asc") ? "desc" : "asc"));
         return ResponseEntity.ok(ApiResponse.success("Pilots retrieve successfully", response));
     }
-
-//    @PostMapping("/validate")
-//    public ResponseEntity<ApiResponse<CouponResponse>> validateCoupon(@RequestBody CouponValidationRequest validationRequest){
-//        try{
-//            CouponResponse couponResponse = this.couponService.validateCoupon(validationRequest);
-//            return ResponseEntity.ok(ApiResponse.success("Coupon validated successfully", couponResponse));
-//        }catch (Exception e){
-//            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
-//        }
-//    }
 }
