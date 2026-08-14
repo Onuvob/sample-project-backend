@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/adminVehicles")
+@RequestMapping("/api/adminVehicles")
 @RequiredArgsConstructor
 public class VehicleAdminController {
 
@@ -44,7 +44,7 @@ public class VehicleAdminController {
         Page<VehicleResponse> data = this.vehicleService.getPendingVehicles(request);
         Map<String, Object> response = new HashMap<>();
 
-        response.put("objectList", data.getContent());
+        response.put("data", data.getContent());
         response.put("currentPage", data.getNumber());
         response.put("totalPages", data.getTotalPages());
         response.put("totalItems", data.getTotalElements());
