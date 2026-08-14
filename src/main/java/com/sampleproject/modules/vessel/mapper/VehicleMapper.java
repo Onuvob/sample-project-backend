@@ -44,6 +44,7 @@ public class VehicleMapper {
         response.setCapacity(vehicle.getCapacity());
         response.setCreatedAt(vehicle.getCreatedAt());
         response.setUpdatedAt(vehicle.getUpdatedAt());
+        response.setStatus(vehicle.getStatus());
 
         if (vehicle.getOwner() != null) {
             response.setOwnerFirstName(vehicle.getOwner().getFirstName());

@@ -14,13 +14,13 @@ import org.springframework.data.repository.query.Param;
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     @Query("SELECT com.sampleproject.modules.vessel.dto.VehicleResponse(v.id, v.registrationNumber, " +
-            "v.name, v.type, v.capacity, v.owner.firstName, v.owner.lastName, v.createdAt, v.updatedAt) " +
+            "v.name, v.type, v.capacity, v.owner.firstName, v.owner.lastName, v.status, v.createdAt, v.updatedAt) " +
             "FROM Vehicle v where v.status = :vehicleStatus")
     Page<VehicleResponse> getPaginatedPendingList(@Param("vehicleStatus") VehicleStatus vehicleStatus,
                                                   Pageable pageable);
 
     @Query("SELECT new com.sampleproject.modules.vessel.dto.VehicleResponse(v.id, v.registrationNumber, " +
-            "v.name, v.type, v.capacity, v.owner.firstName, v.owner.lastName, v.createdAt, v.updatedAt) " +
+            "v.name, v.type, v.capacity, v.owner.firstName, v.owner.lastName, v.status, v.createdAt, v.updatedAt) " +
             "FROM Vehicle v where v.owner = :user " +
             "AND (:name IS NULL OR LOWER(v.name) LIKE :name)")
     Page<VehicleResponse> getSelfPaginatedList(@Param("name") String name,

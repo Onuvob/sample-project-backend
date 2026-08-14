@@ -1,5 +1,6 @@
 package com.sampleproject.modules.vessel.dto;
 
+import com.sampleproject.common.enums.VehicleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class VehicleResponse {
     private Double capacity;
     private String ownerFirstName;
     private String ownerLastName;
+    private VehicleStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
