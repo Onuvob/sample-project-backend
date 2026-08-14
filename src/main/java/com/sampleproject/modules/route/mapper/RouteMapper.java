@@ -24,6 +24,8 @@ public class RouteMapper {
         response.setDestination(route.getDestination());
         response.setServiceFee(route.getServiceFee());
         response.setActive(route.getActive());
+        response.setCreatedAt(route.getCreatedAt());
+        response.setUpdatedAt(route.getUpdatedAt());
 
         return response;
     }
