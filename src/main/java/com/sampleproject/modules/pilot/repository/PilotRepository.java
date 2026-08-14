@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface PilotRepository extends JpaRepository<Pilot, Long> {
 
     @Query("SELECT new com.sampleproject.modules.pilot.dto.PilotResponse(p.id, p.name, " +
-            "p.phone, p.status) " +
+            "p.phone, p.status, p.createdAt, p.updatedAt) " +
             "FROM Pilot p WHERE (:name IS NULL OR LOWER(p.name) LIKE :name) " +
             "AND (:phone IS NULL OR LOWER(p.phone) LIKE :phone)")
     Page<PilotResponse> getPaginatedList(@Param("name") String name,

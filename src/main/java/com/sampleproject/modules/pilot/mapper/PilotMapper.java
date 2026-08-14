@@ -36,6 +36,8 @@ public class PilotMapper {
         response.setName(pilot.getName());
         response.setPhone(pilot.getPhone());
         response.setStatus(pilot.getStatus());
+        response.setCreatedAt(pilot.getCreatedAt());
+        response.setUpdatedAt(pilot.getUpdatedAt());
 
         return response;
     }
