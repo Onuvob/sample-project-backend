@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/vehicles")
+@RequestMapping("/api/vehicles")
 @RequiredArgsConstructor
 public class VehicleController {
 
@@ -32,7 +32,17 @@ public class VehicleController {
         }
     }
 
-    @PutMapping("/update")
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ApiResponse<VehicleResponse>> getById(@PathVariable Long id){
+        try {
+            VehicleResponse vehicleResponse = this.vehicleService.getVehicle(id);
+            return ResponseEntity.ok(ApiResponse.success("Vehicle retrieve successfully", vehicleResponse));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    @PutMapping("/update/{id}")
     public ResponseEntity<ApiResponse<VehicleResponse>> updateVehicle(@PathVariable Long id, @Valid @RequestBody VehicleRequest request){
         try {
             VehicleResponse vehicleResponse = this.vehicleService.updateVehicle(id, request);
@@ -52,12 +62,12 @@ public class VehicleController {
         }
     }
 
-    @GetMapping("/selfList")
+    @GetMapping("/list")
     public ResponseEntity<ApiResponse<?>> getMyVehicles(RequestUtil request){
         Page<VehicleResponse> data = this.vehicleService.getSelfPaginatedList(request);
         Map<String, Object> response = new HashMap<>();
 
-        response.put("objectList", data.getContent());
+        response.put("data", data.getContent());
         response.put("currentPage", data.getNumber());
         response.put("totalPages", data.getTotalPages());
         response.put("totalItems", data.getTotalElements());
