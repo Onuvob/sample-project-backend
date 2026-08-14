@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/adminPilots")
+@RequestMapping("/api/adminPilots")
 @RequiredArgsConstructor
 public class PilotAdminController {
 
@@ -27,7 +27,7 @@ public class PilotAdminController {
         Page<PilotResponse> data = this.pilotService.getPaginatedList(request);
         Map<String, Object> response = new HashMap<>();
 
-        response.put("objectList", data.getContent());
+        response.put("data", data.getContent());
         response.put("currentPage", data.getNumber());
         response.put("totalPages", data.getTotalPages());
         response.put("totalItems", data.getTotalElements());
@@ -43,6 +43,16 @@ public class PilotAdminController {
         try{
             PilotResponse pilotResponse = this.pilotService.createPilot(request);
             return ResponseEntity.ok(ApiResponse.success("Pilot created successfully", pilotResponse));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ApiResponse<PilotResponse>> getById(@PathVariable Long id){
+        try {
+            PilotResponse pilotResponse = this.pilotService.getPilotById(id);
+            return ResponseEntity.ok(ApiResponse.success("Pilot retrieve successfully", pilotResponse));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
         }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/coupons")
+@RequestMapping("/api/coupons")
 @RequiredArgsConstructor
 public class CouponController {
 

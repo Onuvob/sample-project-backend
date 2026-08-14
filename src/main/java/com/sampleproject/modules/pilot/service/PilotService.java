@@ -45,6 +45,12 @@ public class PilotService {
                 .orElseThrow(() -> new RuntimeException("Pilot not found with id: " + id));
     }
 
+    public PilotResponse getPilotById(Long id){
+        Pilot pilot = this.pilotRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pilot not found with id: " + id));
+        return this.pilotMapper.toResponse(pilot);
+    }
+
     public PilotResponse updatePilot(Long id, PilotRequest request) {
 
         Pilot pilot = this.pilotRepository.findById(id)

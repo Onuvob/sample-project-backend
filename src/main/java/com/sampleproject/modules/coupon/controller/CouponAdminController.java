@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/adminCoupons")
+@RequestMapping("/api/adminCoupons")
 @RequiredArgsConstructor
 public class CouponAdminController {
 

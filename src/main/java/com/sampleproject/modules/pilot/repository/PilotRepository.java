@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface PilotRepository extends JpaRepository<Pilot, Long> {
 
-    @Query("SELECT com.sampleproject.modules.pilot.dto.PilotResponse(p.id, p.name, " +
+    @Query("SELECT new com.sampleproject.modules.pilot.dto.PilotResponse(p.id, p.name, " +
             "p.phone, p.status) " +
             "FROM Pilot p WHERE (:name IS NULL OR LOWER(p.name) LIKE :name) " +
             "AND (:phone IS NULL OR LOWER(p.phone) LIKE :phone)")
