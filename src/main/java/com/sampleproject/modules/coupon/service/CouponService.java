@@ -110,4 +110,8 @@ public class CouponService {
                 QueryHelper.formatLikeParamLower(request.getCode()),
                 pageable);
     }
+
+    public void deleteCoupon(Long id) {
+        this.couponRepository.deleteById(id);
+    }
 }

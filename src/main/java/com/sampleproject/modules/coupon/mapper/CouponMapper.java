@@ -25,6 +25,8 @@ public class CouponMapper {
         response.setAmount(coupon.getAmount());
         response.setExpiryDate(coupon.getExpiryDate());
         response.setStatus(coupon.getStatus());
+        response.setCreatedAt(coupon.getCreatedAt());
+        response.setUpdatedAt(coupon.getUpdatedAt());
 
         if (coupon.getOwner() != null) {
             response.setOwnerFirstName(coupon.getOwner().getFirstName());

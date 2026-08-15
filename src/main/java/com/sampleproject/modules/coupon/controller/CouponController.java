@@ -25,7 +25,7 @@ public class CouponController {
         Page<CouponResponse> data = this.couponService.getSelfPaginatedList(request);
         Map<String, Object> response = new HashMap<>();
 
-        response.put("objectList", data.getContent());
+        response.put("data", data.getContent());
         response.put("currentPage", data.getNumber());
         response.put("totalPages", data.getTotalPages());
         response.put("totalItems", data.getTotalElements());

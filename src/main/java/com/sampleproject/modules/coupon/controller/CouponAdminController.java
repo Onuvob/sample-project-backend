@@ -29,6 +29,16 @@ public class CouponAdminController {
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
         }
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ApiResponse<CouponResponse>> getCoupon(@PathVariable Long id){
+        try{
+            CouponResponse couponResponse = this.couponService.getCoupon(id);
+            return ResponseEntity.ok(ApiResponse.success("Coupon retrieve successfully", couponResponse));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
+        }
 
     }
 
@@ -38,7 +48,7 @@ public class CouponAdminController {
         Page<CouponResponse> data = this.couponService.getPaginatedList(request);
         Map<String, Object> response = new HashMap<>();
 
-        response.put("objectList", data.getContent());
+        response.put("data", data.getContent());
         response.put("currentPage", data.getNumber());
         response.put("totalPages", data.getTotalPages());
         response.put("totalItems", data.getTotalElements());
@@ -47,5 +57,15 @@ public class CouponAdminController {
         response.put("sortDir", request.getSortDir());
         response.put("reverseSortDir", (request.getSortDir().equals("asc") ? "desc" : "asc"));
         return ResponseEntity.ok(ApiResponse.success("Pilots retrieve successfully", response));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ApiResponse<String>> deleteCoupon(@PathVariable Long id){
+        try {
+            this.couponService.deleteCoupon(id);
+            return ResponseEntity.ok(ApiResponse.success("Coupon deleted successfully", null));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
+        }
     }
 }

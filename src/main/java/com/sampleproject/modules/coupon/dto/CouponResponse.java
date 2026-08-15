@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -18,4 +19,6 @@ public class CouponResponse {
     private CouponStatus status;
     private String ownerFirstName;
     private String ownerLastName;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

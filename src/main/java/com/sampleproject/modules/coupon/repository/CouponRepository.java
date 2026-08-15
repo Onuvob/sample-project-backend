@@ -14,12 +14,12 @@ import java.util.Optional;
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
     @Query("SELECT new com.sampleproject.modules.coupon.dto.CouponResponse(c.id, c.code, c.amount, " +
-            "c.expiryDate, c.status, c.owner.firstName, c.owner.lastName) " +
+            "c.expiryDate, c.status, c.owner.firstName, c.owner.lastName, c.createdAt, c.updatedAt) " +
             "FROM Coupon c WHERE (:code IS NULL OR LOWER(c.code) LIKE :code)")
     Page<CouponResponse> getPaginatedList(@Param("code") String code, Pageable pageable);
 
     @Query("SELECT new com.sampleproject.modules.coupon.dto.CouponResponse(c.id, c.code, c.amount, " +
-            "c.expiryDate, c.status, c.owner.firstName, c.owner.lastName) " +
+            "c.expiryDate, c.status, c.owner.firstName, c.owner.lastName, c.createdAt, c.updatedAt) " +
             "FROM Coupon c WHERE c.owner = :currentUser " +
             "AND (:code IS NULL OR LOWER(c.code) LIKE :code)")
     Page<CouponResponse> getSelfPaginatedList(@Param("code") String code,
