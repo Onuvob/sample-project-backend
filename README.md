@@ -8,7 +8,7 @@
 ## Project Details
 
 ### Application Name
-**Vehicle Booking Management System**
+**Pilot Booking & Coupon Payment Management System**
 
 ### Description
 A comprehensive RESTful API built with Spring Boot for managing a vehicle booking platform. The application features secure JWT-based authentication, role-based access control (Admin, Owner), and complete lifecycle management for vehicles, routes, pilots, coupons, and bookings. It includes administrative capabilities for approving/rejecting vehicles and bookings, assigning pilots, and managing system-wide coupons.
@@ -29,6 +29,21 @@ A comprehensive RESTful API built with Spring Boot for managing a vehicle bookin
 - **OpenAPI JSON:** `http://localhost:8080/api-docs`
 
 ---
+## Postman Collection
+
+The Postman collection containing the API endpoints is available here:
+
+[Download Postman Collection](./postman/pilot-booking-api-collection.postman_collection.json)
+
+### Import into Postman
+
+1. Download the collection using the link above.
+2. Open Postman.
+3. Click **Import**.
+4. Select `assessment-api.postman_collection.json`.
+5. Run the Spring Boot application.
+6. Execute the requests from the imported collection.
+
 
 ## Default Users (Seeded Data)
 

@@ -1,0 +1,1022 @@
+{
+  "info": {
+    "_postman_id": "6665795c-0925-47d9-bea5-c8f1e025101f",
+    "name": "pilot-booking-api-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10690689"
+  },
+  "item": [
+    {
+      "name": "authentication",
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Sonjoy\",\r\n    \"lastName\": \"Tripura\",\r\n    \"email\": \"sonjoy@sonjoy.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"01515697888\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}auth/register",
+              "host": [
+                "{{host}}auth"
+              ],
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// ✅ Save accessToken from nested JSON response\r",
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response?.data?.accessToken) {\r",
+                  "    pm.collectionVariables.set(\"token\", response.data.accessToken);\r",
+                  "    console.log(\"✅ Access Token stored in collection variables\");\r",
+                  "} else {\r",
+                  "    console.warn(\"⚠️ Access Token not found in response\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "// {\r\n//     \"email\": \"admin@sample.com\",\r\n//     \"password\": \"password123\"\r\n// }\r\n\r\n\r\n{\r\n    \"email\": \"owner1@sample.com\",\r\n    \"password\": \"password123\"\r\n}\r\n\r\n// {\r\n//     \"email\": \"owner2@sample.com\",\r\n//     \"password\": \"password123\"\r\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}auth/login",
+              "host": [
+                "{{host}}auth"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refresh token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"2f774cf3-6201-4ef3-b1e1-fc869cc93b45\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}refreshToken",
+              "host": [
+                "{{host}}refreshToken"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forgot password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{host}}auth/forgotPassword",
+              "host": [
+                "{{host}}auth"
+              ],
+              "path": [
+                "forgotPassword"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reset password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{host}}auth/resetPassword",
+              "host": [
+                "{{host}}auth"
+              ],
+              "path": [
+                "resetPassword"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "user list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}user/list",
+              "host": [
+                "{{host}}user"
+              ],
+              "path": [
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "owner list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}user/ownerList",
+              "host": [
+                "{{host}}user"
+              ],
+              "path": [
+                "ownerList"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "me",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}user/me",
+              "host": [
+                "{{host}}user"
+              ],
+              "path": [
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "vehicle",
+      "item": [
+        {
+          "name": "owner vehicle",
+          "item": [
+            {
+              "name": "get list",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}vehicles/list",
+                  "host": [
+                    "{{host}}vehicles"
+                  ],
+                  "path": [
+                    "list"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get by id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}vehicles/get/1",
+                  "host": [
+                    "{{host}}vehicles"
+                  ],
+                  "path": [
+                    "get",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"registrationNumber\":\"REG1OV!\",\r\n    \"name\":\"OV1\",\r\n    \"type\":\"Micro\",\r\n    \"capacity\":8\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host}}vehicles/create",
+                  "host": [
+                    "{{host}}vehicles"
+                  ],
+                  "path": [
+                    "create"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "admin",
+          "item": [
+            {
+              "name": "pending vehicles",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminVehicles/pending",
+                  "host": [
+                    "{{host}}adminVehicles"
+                  ],
+                  "path": [
+                    "pending"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "approve vehicle",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminVehicles/approve/1",
+                  "host": [
+                    "{{host}}adminVehicles"
+                  ],
+                  "path": [
+                    "approve",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reject vehicle",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminVehicles/reject",
+                  "host": [
+                    "{{host}}adminVehicles"
+                  ],
+                  "path": [
+                    "reject"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pilot",
+      "item": [
+        {
+          "name": "list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}adminPilots/list",
+              "host": [
+                "{{host}}adminPilots"
+              ],
+              "path": [
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Pilot 1\",\r\n    \"phone\": \"123456789\",\r\n    \"status\": \"Available\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}adminPilots/create",
+              "host": [
+                "{{host}}adminPilots"
+              ],
+              "path": [
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}adminPilots/get/1",
+              "host": [
+                "{{host}}adminPilots"
+              ],
+              "path": [
+                "get",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "route",
+      "item": [
+        {
+          "name": "list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}adminRoutes/list",
+              "host": [
+                "{{host}}adminRoutes"
+              ],
+              "path": [
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host}}adminRoutes/get/1",
+              "host": [
+                "{{host}}adminRoutes"
+              ],
+              "path": [
+                "get",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"source\":\"Source DHK\",\r\n    \"destination\":\"DHAKA TO CTG\",\r\n    \"serviceFee\":700\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}adminRoutes/create",
+              "host": [
+                "{{host}}adminRoutes"
+              ],
+              "path": [
+                "create"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "coupon",
+      "item": [
+        {
+          "name": "admin",
+          "item": [
+            {
+              "name": "list",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminCoupons/list",
+                  "host": [
+                    "{{host}}adminCoupons"
+                  ],
+                  "path": [
+                    "list"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminCoupons/get/1",
+                  "host": [
+                    "{{host}}adminCoupons"
+                  ],
+                  "path": [
+                    "get",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"code\":\"Source DHK\",\r\n    \"amount\": 500,\r\n    \"expiryDate\": \"2026-08-30\",\r\n    \"status\": \"ACTIVE\",\r\n    \"ownerId\": 2\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host}}adminCoupons/create",
+                  "host": [
+                    "{{host}}adminCoupons"
+                  ],
+                  "path": [
+                    "create"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "owner",
+          "item": [
+            {
+              "name": "list",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}coupons/list",
+                  "host": [
+                    "{{host}}coupons"
+                  ],
+                  "path": [
+                    "list"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "booking",
+      "item": [
+        {
+          "name": "owner",
+          "item": [
+            {
+              "name": "create",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"vehicleId\": 1,\r\n    \"routeId\": 1,\r\n    \"couponCode\": \"COUPONOW1\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host}}bookings/create",
+                  "host": [
+                    "{{host}}bookings"
+                  ],
+                  "path": [
+                    "create"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}bookings/get/1",
+                  "host": [
+                    "{{host}}bookings"
+                  ],
+                  "path": [
+                    "get",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "list",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}bookings/list",
+                  "host": [
+                    "{{host}}bookings"
+                  ],
+                  "path": [
+                    "list"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "admin",
+          "item": [
+            {
+              "name": "list",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminBookings/list",
+                  "host": [
+                    "{{host}}adminBookings"
+                  ],
+                  "path": [
+                    "list"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminBookings/get/1",
+                  "host": [
+                    "{{host}}adminBookings"
+                  ],
+                  "path": [
+                    "get",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "approve",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminBookings/approve/1",
+                  "host": [
+                    "{{host}}adminBookings"
+                  ],
+                  "path": [
+                    "approve",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reject",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{host}}adminBookings/reject/1",
+                  "host": [
+                    "{{host}}adminBookings"
+                  ],
+                  "path": [
+                    "reject",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "assign pilot",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"pilotId\": 1,\r\n    \"bookingId\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host}}adminBookings/assignPilot/1",
+                  "host": [
+                    "{{host}}adminBookings"
+                  ],
+                  "path": [
+                    "assignPilot",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "host",
+      "value": ""
+    }
+  ]
+}
