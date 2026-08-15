@@ -40,7 +40,7 @@ The Postman collection containing the API endpoints is available here:
 1. Download the collection using the link above.
 2. Open Postman.
 3. Click **Import**.
-4. Select `assessment-api.postman_collection.json`.
+4. Select `pilot-booking-api-collection.postman_collection.json`.
 5. Run the Spring Boot application.
 6. Execute the requests from the imported collection.
 
