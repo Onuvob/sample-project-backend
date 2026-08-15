@@ -77,7 +77,9 @@ public class CouponService {
             throw new RuntimeException("Coupon amount is not enough for this route");
         }
 
-        return coupon;
+        coupon.setStatus(CouponStatus.USED);
+
+        return this.couponRepository.save(coupon);
     }
 
     public void useCoupon(String code){}
