@@ -39,6 +39,16 @@ public class BookingAdminController {
 
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ApiResponse<BookingResponse>> getById(@PathVariable Long id){
+        try{
+            BookingResponse bookingResponse = this.bookingService.bookingDetails(id);
+            return ResponseEntity.ok(ApiResponse.success("Booking retrieve successfully", bookingResponse));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
     @PutMapping("/approve/{id}")
     public ResponseEntity<ApiResponse<BookingResponse>> approve(@PathVariable Long id){
         try{
