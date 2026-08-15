@@ -1,5 +1,6 @@
 package com.sampleproject.user.impl;
 
+import com.sampleproject.common.enums.Role;
 import com.sampleproject.user.dto.UserResponse;
 import com.sampleproject.user.entity.User;
 import com.sampleproject.user.mapper.UserMapper;
@@ -19,6 +20,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponse> getAllUsers() {
         return userMapper.toResponseList(userRepository.findAll());
+    }
+
+    @Override
+    public List<UserResponse> getAllOwners() {
+        return userMapper.toResponseList(userRepository.findAllByRole(Role.OWNER));
     }
 
     @Override

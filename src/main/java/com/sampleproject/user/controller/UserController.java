@@ -23,6 +23,12 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("User list retrieve successfully", userResponseList));
     }
 
+    @GetMapping("/ownerList")
+    public ResponseEntity<ApiResponse<List<UserResponse>>> getAllOwner(){
+        List<UserResponse> userResponseList = userService.getAllOwners();
+        return ResponseEntity.ok(ApiResponse.success("Owner list retrieve successfully", userResponseList));
+    }
+
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserResponse>> getCurrentUser(){
         UserResponse userResponse = userService.getCurrentUser();
