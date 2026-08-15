@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/adminBookings")
+@RequestMapping("/api/adminBookings")
 @RequiredArgsConstructor
 public class BookingAdminController {
 
@@ -27,7 +27,7 @@ public class BookingAdminController {
         Page<BookingResponse> data = this.bookingService.allBookings(request);
         Map<String, Object> response = new HashMap<>();
 
-        response.put("objectList", data.getContent());
+        response.put("data", data.getContent());
         response.put("currentPage", data.getNumber());
         response.put("totalPages", data.getTotalPages());
         response.put("totalItems", data.getTotalElements());
